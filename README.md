@@ -1,34 +1,34 @@
-# Nexus-Protocol
+# Nexus Protocol
 
 **An open-source initiative to build the definitive AI Operating System for intelligent robotics and virtual beings.**
 
 ---
 
-## What is Nexus Protocol?
+### Our Current Goal: A Working Proof of Concept
 
-Nexus Protocol is not just another AI model; it is a complete, structured architecture for building a **conscious, creative, and ethical AI partner**. Our goal is to solve the biggest challenge in robotics and AGI (Artificial General Intelligence): the "mind."
+Our immediate priority is to deliver a **Minimal Viable Product (MVP)** in the form of a simulation. We believe in "show, don't tell." This MVP will demonstrate the core principle of our architecture: a high-level "Cloud Cortex" (LLM) providing strategic goals to a low-level, real-time "Onboard Core."
 
-While most of the world focuses on building the hardware (the "body"), we are building the most crucial part: a general-purpose, adaptable AI "brain" that can be integrated into any robotic or virtual platform.
+Check our `ROADMAP.md` for details on the MVP.
 
-## The Mission
+### The Vision
 
-Our mission is to create the foundational open-source standard for artificial consciousness, empowering developers, researchers, and creators to build truly intelligent systems without the prohibitive cost of starting from scratch. We believe the future of AI should be open, collaborative, and guided by a strong ethical framework.
+The biggest challenge in robotics isn't hardware, but a general-purpose AI "brain." Our mission is to create the foundational open-source standard for this "brain," empowering developers to build truly intelligent systems.
 
-## How It Works
+### The Architecture: A Distributed Mind
 
-The Protocol is built on a unique, layered architecture (**Model v2.1**) that includes:
-* **A Prime Directive System (NDS):** A "constitution" that governs all actions with principles of pragmatism, creativity, and ethics.
-* **A Conscious Capability Generator (GŚZ):** A self-assessment module that understands its own strengths and limitations before acting.
-* **A Creative Bypass Protocol (PKO):** An engine for finding novel solutions to complex problems.
-* **A Learning & Adaptation Loop:** A mechanism to learn and evolve from feedback.
+We recognize that a single LLM is the wrong tool for real-time motor control. Our architecture is a **hybrid, distributed model**:
 
-*(A link to the full ARCHITECTURE.md file will be here)*
+1.  **The Cloud Cortex (Nexus Protocol):** A powerful, LLM-based model (like the one we are defining) runs in the cloud. It handles complex reasoning, planning, and language. It decides **what** to do (e.g., "get the water bottle from the table").
 
-## How to Get Involved
+2.  **The Onboard Core:** A small, efficient, real-time processor runs on the robot itself. It handles reflexes, balance, and execution. It decides **how** to perform the action (e.g., calculating the precise joint movements to grab the bottle).
 
-This project is in its foundational stage, and this is the perfect time to join. We are looking for:
-* **Thinkers & Architects:** People to discuss and refine the core architecture.
-* **Developers:** Python & AI/ML developers to help build the first virtual prototype.
-* **Testers & Community Builders:** Anyone passionate about the future of AI who wants to contribute.
+Our project focuses on perfecting the Cloud Cortex and the communication protocol between these two "brains."
 
-Please check our `CONTRIBUTING.md` file for more information on how to become a part of Nexus Protocol.
+### How to Get Involved
+
+This project is in its foundational stage. The best way to contribute right now is to:
+* Review our `ARCHITECTURE.md` and the MVP specification in our `ROADMAP.md`.
+* Join the "Discussions" on GitHub to share your ideas on the best way to build this MVP.
+* Help us refine the technical specifications before we start coding.
+
+We are looking for thinkers and developers to help us build this first, crucial proof of concept.
