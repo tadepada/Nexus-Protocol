@@ -1,165 +1,127 @@
 # main.py
-# Wersja 0.4 - Poprawka mapowania języka na encje i drobne ulepszenia
+# Wersja 0.8 - Poprawiono logikę planu i monitora dla akcji DROP
 
 import json
 import time
+import random
 
-# STAN ŚWIATA (bez zmian)
-WORLD_STATE = {
-    "locations": {
-        "storage_area": ["red_cube", "blue_ball"],
-        "zone_A": [],
-        "zone_B": ["green_pyramid"],
-        "robot_home": []
-    }
-}
-
+# ... (WORLD_STATE i display_world_state() bez zmian) ...
+WORLD_STATE = { "locations": { "storage_area": ["red_cube", "blue_ball"], "zone_A": [], "zone_B": ["green_pyramid"], "robot_home": [] } }
 def display_world_state():
-    """Funkcja pomocnicza do ładnego wyświetlania stanu świata."""
     print("\n--- Aktualny Stan Świata ---")
-    for location, items in WORLD_STATE['locations'].items():
-        print(f"{location}: {items if items else '[pusto]'}")
+    for location, items in WORLD_STATE['locations'].items(): print(f"{location}: {items if items else '[pusto]'}")
     print("---------------------------\n")
 
-class CloudCortex:
-    """
-    Ulepszona Kora w Chmurze z mapowaniem encji.
-    """
+class AwarenessMonitor:
     def __init__(self):
-        print("Cloud Cortex [LLM]: Inicjalizacja. Gotowy do planowania strategicznego.")
-        self.actions = ['przynieś', 'zabierz', 'połóż', 'odłóż']
-        # Słownik encji: mapuje polskie słowa na ustandaryzowane ID
-        self.entity_map = {
-            "czerwony": "red", "niebieski": "blue", "zielony": "green",
-            "sześcian": "cube", "piłka": "ball", "piramida": "pyramid",
-            "strefy a": "zone_A", "strefy b": "zone_B", "bazy": "robot_home", "magazynu": "storage_area"
-        }
+        self.log = []
+        print("Awareness Monitor [KMŚS]: Inicjalizacja. Monitoruję rzeczywistość.")
 
-    def get_entity_from_token(self, token: str) -> str:
-        """Zwraca ID encji na podstawie tokenu (słowa)."""
-        return self.entity_map.get(token)
+    def check_outcome(self, action, target, state_before, state_after):
+        log_entry = f"[ANALIZA] Akcja: {action}, Cel: {target}. "
+        expected_to_succeed = True
+
+        if action == "PICKUP":
+            if target in state_after['world']['locations'][state_after['robot']['location']] or state_after['robot']['holding'] != target:
+                expected_to_succeed = False
+        
+        elif action == "DROP":
+            # --- NOWA, POPRAWIONA LOGIKA MONITORA ---
+            object_that_was_held = state_before['robot']['holding']
+            # Jeśli robot nic nie trzymał, nie mógł tego upuścić.
+            if object_that_was_held is None:
+                expected_to_succeed = False
+            # Oczekujemy, że obiekt, który był w ręku, jest teraz na ziemi, a ręka jest pusta.
+            elif object_that_was_held not in state_after['world']['locations'][state_after['robot']['location']] or state_after['robot']['holding'] is not None:
+                expected_to_succeed = False
+            # --- KONIEC POPRAWKI ---
+        
+        if expected_to_succeed:
+            log_entry += "Wynik zgodny z oczekiwaniami."
+        else:
+            log_entry += "ANOMALIA! Wynik niezgodny z oczekiwaniami!"
+        
+        print(log_entry)
+        self.log.append(log_entry)
+
+
+class CloudCortex:
+    def __init__(self):
+        print("Cloud Cortex [LLM]: Inicjalizacja.")
+        self.actions = ['przynieś', 'zabierz', 'połóż', 'odłóż']
+        self.entity_map = { "czerwony": "red", "niebieski": "blue", "zielony": "green", "sześcian": "cube", "piłka": "ball", "piramida": "pyramid", "strefy a": "zone_A", "strefy b": "zone_B", "bazy": "robot_home", "magazynu": "storage_area" }
+
+    def create_sub_plan(self, object_id, destination_id):
+        source_location = next((loc for loc, items in WORLD_STATE['locations'].items() if object_id in items), None)
+        if not source_location:
+            print(f"Cloud Cortex [LLM]: Błąd pod-planu - obiekt '{object_id}' nie istnieje.")
+            return None
+        
+        # --- NOWY, BARDZIEJ PRECYZYJNY PLAN ---
+        return [
+            {"action": "GOTO", "target": source_location},
+            {"action": "PICKUP", "target": object_id},
+            {"action": "GOTO", "target": destination_id},
+            {"action": "DROP", "target": object_id} # Dodajemy target do akcji DROP
+        ]
+        # --- KONIEC POPRAWKI ---
 
     def generate_plan(self, high_level_goal: str) -> list:
-        print(f"\nCloud Cortex [LLM]: Otrzymano cel: '{high_level_goal}'. Parsowanie polecenia...")
+        # ... (logika planowania warunkowego pozostaje bez zmian) ...
+        print(f"\nCloud Cortex [LLM]: Otrzymano cel warunkowy: '{high_level_goal}'. Analiza warunków...")
         time.sleep(1.5)
-        words = high_level_goal.lower().split()
-
-        # Ulepszone parsowanie z użyciem mapy encji
-        parsed_action = next((word for word in words if word in self.actions), None)
-        parsed_color = next((self.get_entity_from_token(word) for word in words if self.get_entity_from_token(word) in ["red", "green", "blue"]), None)
-        parsed_type = next((self.get_entity_from_token(word) for word in words if self.get_entity_from_token(word) in ["cube", "ball", "pyramid"]), None)
-        
-        # Znajdźmy lokalizacje, obsługując jedno- i dwu-wyrazowe nazwy
-        parsed_destination = None
-        for i, word in enumerate(words):
-            # Sprawdź dwuwyrazowe lokalizacje
-            if i + 1 < len(words):
-                two_word_loc = f"{word} {words[i+1]}"
-                if self.entity_map.get(two_word_loc):
-                    parsed_destination = self.entity_map.get(two_word_loc)
-                    break
-            # Sprawdź jednowyrazowe lokalizacje
-            if self.entity_map.get(word) and self.entity_map.get(word).startswith("zone"):
-                parsed_destination = self.entity_map.get(word)
-                break
-
-        if not (parsed_action and parsed_color and parsed_type and parsed_destination):
-            print("Cloud Cortex [LLM]: Nie udało się zrozumieć polecenia. Brak kluczowych informacji.")
-            return []
-
-        # Tworzenie ustandaryzowanego ID obiektu
-        canonical_object_id = f"{parsed_color}_{parsed_type}"
-        
-        source_location = None
-        for loc, items in WORLD_STATE['locations'].items():
-            if canonical_object_id in items:
-                source_location = loc
-                break
-        
-        if not source_location:
-            print(f"Cloud Cortex [LLM]: Błąd planowania - obiekt '{canonical_object_id}' nie został znaleziony w świecie.")
-            return []
-
-        plan = [
-            {"action": "GOTO", "target": source_location},
-            {"action": "VERIFY_OBJECT", "target": canonical_object_id},
-            {"action": "PICKUP", "target": canonical_object_id},
-            {"action": "GOTO", "target": parsed_destination},
-            {"action": "DROP"}
-        ]
-        
-        print(f"Cloud Cortex [LLM]: Polecenie zrozumiane. Plan dla '{canonical_object_id}' wygenerowany pomyślnie.")
-        return plan
+        goal_lower = high_level_goal.lower()
+        if goal_lower.startswith("jeśli"):
+             condition_obj_id = "red_cube"; condition_loc = "storage_area"
+             print(f"Cloud Cortex [LLM]: Sprawdzam warunek: Czy '{condition_obj_id}' jest w '{condition_loc}'?")
+             if condition_obj_id in WORLD_STATE['locations'].get(condition_loc, []):
+                 print("Cloud Cortex [LLM]: Warunek PRAWDZIWY. Wykonuję pierwszą ścieżkę.")
+                 return self.create_sub_plan("red_cube", "zone_B")
+             else:
+                 print("Cloud Cortex [LLM]: Warunek FAŁSZYWY. Wykonuję ścieżkę 'w przeciwnym razie'.")
+                 return self.create_sub_plan("blue_ball", "zone_A")
+        return []
 
 class OnboardCore:
-    # Ta klasa pozostaje bez zmian
-    def __init__(self):
-        self.robot_state = {"holding": None, "location": "robot_home"}
-        print(f"Onboard Core [Robot]: Inicjalizacja. Stan: {self.robot_state}")
-
-    def execute_plan(self, plan: list):
+    # ... (bez zmian) ...
+    def __init__(self): self.robot_state = {"holding": None, "location": "robot_home"}; print(f"Onboard Core [Robot]: Inicjalizacja. Stan: {self.robot_state}")
+    def execute_plan(self, plan: list, monitor: AwarenessMonitor):
         print("\nOnboard Core [Robot]: Otrzymano plan. Rozpoczynam wykonanie.")
-        if not plan:
-            print("Onboard Core [Robot]: Plan jest pusty. Brak akcji do wykonania.")
-            return
-
+        if not plan: return
         for step in plan:
-            action = step.get("action")
-            target = step.get("target")
+            action, target = step.get("action"), step.get("target")
             print(f"--- Wykonuję krok: {action}, Cel: {target if target else 'N/A'} ---")
+            state_before = {'robot': self.robot_state.copy(), 'world': json.loads(json.dumps(WORLD_STATE))}
             time.sleep(1)
-            
-            success = False
-            # ... logika wykonywania kroków pozostaje bez zmian ...
-            if action == "GOTO":
-                self.robot_state["location"] = target
-                success = True
-                print(f"Onboard Core [Robot]: Przeniesiono do '{target}'.")
-            elif action == "VERIFY_OBJECT":
-                if target in WORLD_STATE['locations'][self.robot_state['location']]:
-                    success = True
-                    print(f"Onboard Core [Robot]: Weryfikacja obiektu '{target}' udana.")
-                else:
-                    print(f"Onboard Core [Robot]: BŁĄD! Nie znaleziono '{target}' w '{self.robot_state['location']}'.")
-            elif action == "PICKUP":
-                if target in WORLD_STATE['locations'][self.robot_state['location']] and self.robot_state['holding'] is None:
-                    WORLD_STATE['locations'][self.robot_state['location']].remove(target)
-                    self.robot_state['holding'] = target
-                    success = True
-                    print(f"Onboard Core [Robot]: Obiekt '{target}' podniesiony.")
-                else:
-                    print(f"Onboard Core [Robot]: BŁĄD! Nie można podnieść '{target}'.")
-            elif action == "DROP":
-                if self.robot_state['holding'] is not None:
-                    WORLD_STATE['locations'][self.robot_state['location']].append(self.robot_state['holding'])
-                    self.robot_state['holding'] = None
-                    success = True
-                    print(f"Onboard Core [Robot]: Obiekt upuszczony w '{self.robot_state['location']}'.")
-                else:
-                    print("Onboard Core [Robot]: BŁĄD! Nie trzymam żadnego obiektu.")
-
-            if not success:
-                print("Onboard Core [Robot]: Wykonanie kroku nie powiodło się. Przerywam plan.")
-                break
-        
+            success = self.perform_action(action, target)
+            state_after = {'robot': self.robot_state.copy(), 'world': json.loads(json.dumps(WORLD_STATE))}
+            monitor.check_outcome(action, target, state_before, state_after)
+            if not success: print("Onboard Core [Robot]: Wykonanie kroku nie powiodło się. Przerywam plan."); break
         print("\nOnboard Core [Robot]: Zakończono wykonywanie planu.")
-
+    def perform_action(self, action, target):
+        if action == "GOTO": self.robot_state["location"] = target; return True
+        if action == "PICKUP":
+            if random.random() < 0.33: print(f"Onboard Core [Robot]: KRYTYCZNY BŁĄD! Chwytak ześlizgnął się z obiektu '{target}'."); return True
+            if target in WORLD_STATE['locations'][self.robot_state['location']] and self.robot_state['holding'] is None:
+                WORLD_STATE['locations'][self.robot_state['location']].remove(target); self.robot_state['holding'] = target; print(f"Onboard Core [Robot]: Obiekt '{target}' podniesiony."); return True
+            return False
+        if action == "DROP":
+            if self.robot_state['holding'] is not None:
+                WORLD_STATE['locations'][self.robot_state['location']].append(self.robot_state['holding']); self.robot_state['holding'] = None; print(f"Onboard Core [Robot]: Obiekt upuszczony w '{self.robot_state['location']}'."); return True
+            return False
+        return False
 
 def main():
-    print("--- Start Symulacji Nexus Protocol MVP v0.4 ---")
+    print("--- Start Symulacji Nexus Protocol MVP v0.8 ---")
     display_world_state()
-    
     cortex = CloudCortex()
     core = OnboardCore()
-
-    user_goal = "Przynieś czerwony sześcian z magazynu do strefy A"
-
+    monitor = AwarenessMonitor()
+    user_goal = "Jeśli w magazynie jest czerwony sześcian, przenieś go do strefy B. W przeciwnym razie, przynieś niebieską piłkę do strefy A."
     strategic_plan = cortex.generate_plan(user_goal)
-    core.execute_plan(strategic_plan)
-
+    core.execute_plan(strategic_plan, monitor)
     print("\n--- Końcowy Stan Świata ---")
     display_world_state()
-
 
 if __name__ == "__main__":
     main()
