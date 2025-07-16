@@ -6,9 +6,9 @@
 
 ### Our Current Goal: A Working Proof of Concept
 
-Our immediate priority is to deliver a **Minimal Viable Product (MVP)** in the form of a simulation. We believe in "show, don't tell." This MVP will demonstrate the core principle of our architecture: a high-level "Cloud Cortex" (LLM) providing strategic goals to a low-level, real-time "Onboard Core."
+Our immediate priority is to deliver a **Minimal Viable Product (MVP)** in the form of a simulation. We believe in "show, don't tell." This MVP demonstrates the core principle of our architecture: a high-level "Cloud Cortex" (LLM) providing strategic goals to a low-level, real-time "Onboard Core."
 
-Check our `ROADMAP.md` for details on the MVP.
+Check our `ROADMAP.md` for details on the MVP and see our `QUICKSTART.md` to run it yourself!
 
 ### The Vision
 
@@ -18,9 +18,9 @@ The biggest challenge in robotics isn't hardware, but a general-purpose AI "brai
 
 We recognize that a single LLM is the wrong tool for real-time motor control. Our architecture is a **hybrid, distributed model**:
 
-1.  **The Cloud Cortex (Nexus Protocol):** A powerful, LLM-based model (like the one we are defining) runs in the cloud. It handles complex reasoning, planning, and language. It decides **what** to do (e.g., "get the water bottle from the table").
+1.  **The Cloud Cortex (Nexus Protocol):** A powerful, LLM-based model runs in the cloud. It handles complex reasoning, planning, and language. It decides **what** to do (e.g., "get the water bottle from the table").
 
-2.  **The Onboard Core:** A small, efficient, real-time processor runs on the robot itself. It handles reflexes, balance, and execution. It decides **how** to perform the action (e.g., calculating the precise joint movements to grab the bottle).
+2.  **The Onboard Core:** A small, efficient, real-time processor runs on the robot itself. It handles reflexes, balance, and execution. It decides **how** to perform the action (e.g., calculating the precise joint movements).
 
 Our project focuses on perfecting the Cloud Cortex and the communication protocol between these two "brains."
 
@@ -28,7 +28,7 @@ Our project focuses on perfecting the Cloud Cortex and the communication protoco
 
 This project is in its foundational stage. The best way to contribute right now is to:
 * Review our `ARCHITECTURE.md` and the MVP specification in our `ROADMAP.md`.
-* Join the "Discussions" on GitHub to share your ideas on the best way to build this MVP.
-* Help us refine the technical specifications before we start coding.
+* Run the MVP simulation using the `QUICKSTART.md` guide.
+* Join the "Discussions" on GitHub to share your ideas on how to improve the MVP.
 
-We are looking for thinkers and developers to help us build this first, crucial proof of concept.
+We are looking for thinkers and developers to help us build the next version of our simulation.
