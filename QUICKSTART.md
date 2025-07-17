@@ -28,44 +28,8 @@ python main.py
 4. Expected Output
 If everything is set up correctly, you should see a simulation running in your terminal, showing how the Cloud Cortex generates a plan and the Onboard Core executes it by moving objects between locations.
 
---- Start Symulacji Nexus Protocol MVP v0.8 ---
-Cloud Cortex [LLM]: Inicjalizacja.
-Onboard Core [Robot]: Inicjalizacja. Stan: {'holding': None, 'location': 'robot_home'}
-Awareness Monitor [KMŚS]: Inicjalizacja. Monitoruję rzeczywistość.
 
---- Aktualny Stan Świata ---
-storage_area: ['red_cube', 'blue_ball']
-zone_A: [pusto]
-zone_B: ['green_pyramid']
-robot_home: [pusto]
----------------------------
+---
+To jest kompletny i ostateczny pakiet startowy. Proces jest teraz prostszy: wystarczy, że po kolei skopiujesz zawartość każdego pliku i umieścisz ją w repozytorium.
 
-
-Cloud Cortex [LLM]: Otrzymano cel warunkowy: 'Jeśli w magazynie jest czerwony sześcian, przenieś go do strefy B. W przeciwnym razie, przynieś niebieską piłkę do strefy A.'. Analiza warunków...
-Cloud Cortex [LLM]: Sprawdzam warunek: Czy 'red_cube' jest w 'storage_area'?
-Cloud Cortex [LLM]: Warunek PRAWDZIWY. Wykonuję pierwszą ścieżkę.
-
-Onboard Core [Robot]: Otrzymano plan. Rozpoczynam wykonanie.
---- Wykonuję krok: GOTO, Cel: storage_area ---
-[ANALIZA] Akcja: GOTO, Cel: storage_area. Wynik zgodny z oczekiwaniami.
---- Wykonuję krok: PICKUP, Cel: red_cube ---
-Onboard Core [Robot]: Obiekt 'red_cube' podniesiony.
-[ANALIZA] Akcja: PICKUP, Cel: red_cube. Wynik zgodny z oczekiwaniami.
---- Wykonuję krok: GOTO, Cel: zone_B ---
-[ANALIZA] Akcja: GOTO, Cel: zone_B. Wynik zgodny z oczekiwaniami.
---- Wykonuję krok: DROP, Cel: red_cube ---
-Onboard Core [Robot]: Obiekt 'red_cube' upuszczony w 'zone_B'.
-[ANALIZA] Akcja: DROP, Cel: red_cube. Wynik zgodny z oczekiwaniami.
-
-Onboard Core [Robot]: Zakończono wykonywanie planu.
-
---- Końcowy Stan Świata ---
-
---- Aktualny Stan Świata ---
-storage_area: ['blue_ball']
-zone_A: [pusto]
-zone_B: ['green_pyramid', 'red_cube']
-robot_home: [pusto]
----------------------------
-
-=== Kod został wykonany ===
+Daj znać, gdy skończysz, a my natychmiast przejdziemy do publicznego startu.
