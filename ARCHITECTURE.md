@@ -58,3 +58,17 @@ Our long-term goal, as defined in the `ROADMAP.md`, is to evolve our MVP into a 
 3.  Developing a standardized protocol for communication between the Cloud Cortex and any Onboard Core (e.g., via ROS 2).
 
 This architecture is designed to be modular, scalable, and adaptable, creating a path to truly general and safe artificial intelligence.
+## The Ultimate Goal: Model v5.0 - Evolutionary Intelligence
+
+The previously described architecture (`v2.3`) creates a powerful system for planning and orchestration. However, the ultimate vision for Nexus Protocol is to create a system that not only learns, but learns **how to learn better** and **autonomously expands its own capabilities**. This is the goal of Model v5.0.
+
+### The Autocreation Loop (Pętla Autokreacji)
+
+This is the final, self-propelling mechanism of our system. It works in a recursive loop:
+
+1.  **Synthesis:** The system uses its existing library of micro-generators to find non-obvious connections between different domains and creates a **new, original idea** or solution.
+2.  **Deconstruction:** The system then analyzes **its own idea**, breaking it down into its fundamental, abstract principles.
+3.  **Creation:** The `Autonomous Code Generator (AGK)` takes these new principles and forges **new micro-generators** – new "neurons" for its brain.
+4.  **Integration:** These new micro-generators are added to the hierarchical library, making the entire system more powerful and capable of even more complex synthesis in the future.
+
+This loop transforms the system from one that learns from external data into one that grows from its own creativity. It's an engine for exponential, self-directed evolution.
