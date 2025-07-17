@@ -27,9 +27,3 @@ Bash
 python main.py
 4. Expected Output
 If everything is set up correctly, you should see a simulation running in your terminal, showing how the Cloud Cortex generates a plan and the Onboard Core executes it by moving objects between locations.
-
-
----
-To jest kompletny i ostateczny pakiet startowy. Proces jest teraz prostszy: wystarczy, że po kolei skopiujesz zawartość każdego pliku i umieścisz ją w repozytorium.
-
-Daj znać, gdy skończysz, a my natychmiast przejdziemy do publicznego startu.
