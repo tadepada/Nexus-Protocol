@@ -56,7 +56,6 @@ class CloudCortex:
     """Kora w Chmurze zdolna do planowania warunkowego."""
     def __init__(self):
         print("Cloud Cortex [LLM]: Inicjalizacja.")
-        self.actions = ['przynieś', 'zabierz', 'połóż', 'odłóż']
         self.entity_map = { "czerwony": "red", "niebieski": "blue", "zielony": "green", "sześcian": "cube", "piłka": "ball", "piramida": "pyramid", "strefy a": "zone_A", "strefy b": "zone_B", "bazy": "robot_home", "magazynu": "storage_area" }
 
     def create_sub_plan(self, object_id, destination_id):
@@ -91,8 +90,8 @@ class CloudCortex:
             return []
 
 class OnboardCore:
-    def __init__(self, world_model):
-        self.world_state_ref = world_model # Przechowujemy referencję do obiektu świata
+    def __init__(self, world_state_ref):
+        self.world_state_ref = world_state_ref
         self.robot_state = {"holding": None, "location": "robot_home"}
         print("OnboardCore: Inicjalizacja. Gotowy do działania.")
 
@@ -112,31 +111,24 @@ class OnboardCore:
             monitor.check_outcome(action, target, state_before, state_after)
 
             if not success:
-                print("Onboard Core [Robot]: Wykonanie kroku nie powiodło się. Przerywam plan.")
-                break
+                print("Onboard Core [Robot]: Wykonanie kroku nie powiodło się. Przerywam plan."); break
         print("\nOnboard Core [Robot]: Zakończono wykonywanie planu.")
 
     def perform_action(self, action, target):
         world_locations = self.world_state_ref['locations']
         if action == "GOTO":
-            self.robot_state["location"] = target
-            return True
+            self.robot_state["location"] = target; return True
         if action == "PICKUP":
             if random.random() < 0.33:
-                print(f"Onboard Core [Robot]: KRYTYCZNY BŁĄD! Chwytak ześlizgnął się z obiektu '{target}'.")
-                return True 
+                print(f"Onboard Core [Robot]: KRYTYCZNY BŁĄD! Chwytak ześlizgnął się z obiektu '{target}'."); return True
             if target in world_locations[self.robot_state['location']] and self.robot_state['holding'] is None:
-                world_locations[self.robot_state['location']].remove(target)
-                self.robot_state['holding'] = target
-                print(f"Onboard Core [Robot]: Obiekt '{target}' podniesiony.")
-                return True
+                world_locations[self.robot_state['location']].remove(target); self.robot_state['holding'] = target
+                print(f"Onboard Core [Robot]: Obiekt '{target}' podniesiony."); return True
             return False
         if action == "DROP":
             if self.robot_state['holding'] is not None and self.robot_state['holding'] == target:
-                world_locations[self.robot_state['location']].append(self.robot_state['holding'])
-                self.robot_state['holding'] = None
-                print(f"Onboard Core [Robot]: Obiekt '{target}' upuszczony w '{self.robot_state['location']}'.")
-                return True
+                world_locations[self.robot_state['location']].append(self.robot_state['holding']); self.robot_state['holding'] = None
+                print(f"Onboard Core [Robot]: Obiekt '{target}' upuszczony w '{self.robot_state['location']}'."); return True
             return False
         return False
 
@@ -144,9 +136,7 @@ def main():
     """Główna pętla programu, która inicjuje i koordynuje pracę modułów."""
     print("--- Start Symulacji Nexus Protocol MVP v1.0 ---")
     
-    # Przekazujemy słownik WORLD_STATE do OnboardCore
     world_instance = WORLD_STATE
-    
     cortex = CloudCortex()
     core = OnboardCore(world_instance)
     monitor = AwarenessMonitor()
