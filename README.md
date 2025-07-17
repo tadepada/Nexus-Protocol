@@ -8,7 +8,9 @@
 
 Our immediate priority is to deliver a **Minimal Viable Product (MVP)** in the form of a simulation. We believe in "show, don't tell." This MVP demonstrates the core principle of our architecture: a high-level "Cloud Cortex" (LLM) providing strategic goals to a low-level, real-time "Onboard Core."
 
-Check our `ROADMAP.md` for details on the MVP and see our `QUICKSTART.md` to run it yourself!
+For a detailed breakdown of the project's philosophy and components, see our [Project Summary](PROJECT_SUMMARY.md).
+
+To run the simulation yourself, check out the [Quick Start Guide](QUICKSTART.md)!
 
 ### The Vision
 
@@ -22,12 +24,12 @@ We recognize that a single LLM is the wrong tool for real-time motor control. Ou
 
 2.  **The Onboard Core:** A small, efficient, real-time processor runs on the robot itself. It handles reflexes, balance, and execution. It decides **how** to perform the action (e.g., calculating the precise joint movements).
 
-Our project focuses on perfecting the Cloud Cortex and the communication protocol between these two "brains."
+Our project focuses on perfecting the Cloud Cortex and the communication protocol between these two "brains." For a more technical deep-dive, see our [Architecture Document](ARCHITECTURE.md).
 
 ### How to Get Involved
 
 This project is in its foundational stage. The best way to contribute right now is to:
-* Review our `ARCHITECTURE.md` and the MVP specification in our `ROADMAP.md`.
+* Review our documentation, especially the `PROJECT_SUMMARY.md` and `ARCHITECTURE.md`.
 * Run the MVP simulation using the `QUICKSTART.md` guide.
 * Join the "Discussions" on GitHub to share your ideas on how to improve the MVP.
 
