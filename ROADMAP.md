@@ -6,7 +6,7 @@ This document outlines our strategic goals. Our immediate focus is on launching 
 
 * **Goal:** Publicly launch our functional MVP to attract the first contributors and gather real-world feedback.
 * **Key Results:**
-    * [x] **MVP v1.0 (formerly v0.8) code is complete and tested.**
+    * [x] **MVP v1.0 code is complete and tested.**
     * [ ] **Update the GitHub repository with all final files.**
     * [ ] **Launch publicly on Hacker News, Reddit, etc.**
     * [ ] Attract the first 10 active community members.
