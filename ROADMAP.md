@@ -24,7 +24,7 @@ This document outlines our strategic goals, from the immediate MVP launch to our
 
 * **Goal:** Create the first successful integration with a physical or simulated robotics platform (e.g., via ROS 2).
 
-## Phase 4: The Ultimate Goal - Evolutionary Intelligence (Model v5.0)
+## Phase 4: The Ultimate Goal - Evolutionary Intelligence
 
 * **Goal:** Implement the **Autocreation Loop**, creating a system that can autonomously generate new capabilities based on its own creative synthesis.
 * **Key Results:**
