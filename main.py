@@ -53,7 +53,7 @@ class AwarenessMonitor:
         self.log.append(log_entry)
 
 class CloudCortex:
-    """Kora w Chmurze zdolna do planowania warunkowego i sekwencyjnego."""
+    """Kora w Chmurze zdolna do planowania warunkowego."""
     def __init__(self):
         print("Cloud Cortex [LLM]: Inicjalizacja.")
         self.actions = ['przynieś', 'zabierz', 'połóż', 'odłóż']
@@ -78,7 +78,6 @@ class CloudCortex:
         goal_lower = high_level_goal.lower()
 
         if goal_lower.startswith("jeśli"):
-             # Uproszczona logika warunkowa
              condition_obj_id = "red_cube"; condition_loc = "storage_area"
              print(f"Cloud Cortex [LLM]: Sprawdzam warunek: Czy '{condition_obj_id}' jest w '{condition_loc}'?")
              if condition_obj_id in WORLD_STATE['locations'].get(condition_loc, []):
@@ -92,9 +91,10 @@ class CloudCortex:
             return []
 
 class OnboardCore:
-    def __init__(self):
+    def __init__(self, world_model):
+        self.world_state_ref = world_model # Przechowujemy referencję do obiektu świata
         self.robot_state = {"holding": None, "location": "robot_home"}
-        print(f"Onboard Core [Robot]: Inicjalizacja. Stan: {self.robot_state}")
+        print("OnboardCore: Inicjalizacja. Gotowy do działania.")
 
     def execute_plan(self, plan: list, monitor: AwarenessMonitor):
         print("\nOnboard Core [Robot]: Otrzymano plan. Rozpoczynam wykonanie.")
@@ -104,10 +104,10 @@ class OnboardCore:
             action, target = step.get("action"), step.get("target")
             print(f"--- Wykonuję krok: {action}, Cel: {target or 'N/A'} ---")
             
-            state_before = {'robot': self.robot_state.copy(), 'world': json.loads(json.dumps(WORLD_STATE))}
+            state_before = {'robot': self.robot_state.copy(), 'world': json.loads(json.dumps(self.world_state_ref))}
             time.sleep(1)
             success = self.perform_action(action, target)
-            state_after = {'robot': self.robot_state.copy(), 'world': json.loads(json.dumps(WORLD_STATE))}
+            state_after = {'robot': self.robot_state.copy(), 'world': json.loads(json.dumps(self.world_state_ref))}
 
             monitor.check_outcome(action, target, state_before, state_after)
 
@@ -117,6 +117,7 @@ class OnboardCore:
         print("\nOnboard Core [Robot]: Zakończono wykonywanie planu.")
 
     def perform_action(self, action, target):
+        world_locations = self.world_state_ref['locations']
         if action == "GOTO":
             self.robot_state["location"] = target
             return True
@@ -124,15 +125,15 @@ class OnboardCore:
             if random.random() < 0.33:
                 print(f"Onboard Core [Robot]: KRYTYCZNY BŁĄD! Chwytak ześlizgnął się z obiektu '{target}'.")
                 return True 
-            if target in WORLD_STATE['locations'][self.robot_state['location']] and self.robot_state['holding'] is None:
-                WORLD_STATE['locations'][self.robot_state['location']].remove(target)
+            if target in world_locations[self.robot_state['location']] and self.robot_state['holding'] is None:
+                world_locations[self.robot_state['location']].remove(target)
                 self.robot_state['holding'] = target
                 print(f"Onboard Core [Robot]: Obiekt '{target}' podniesiony.")
                 return True
             return False
         if action == "DROP":
             if self.robot_state['holding'] is not None and self.robot_state['holding'] == target:
-                WORLD_STATE['locations'][self.robot_state['location']].append(self.robot_state['holding'])
+                world_locations[self.robot_state['location']].append(self.robot_state['holding'])
                 self.robot_state['holding'] = None
                 print(f"Onboard Core [Robot]: Obiekt '{target}' upuszczony w '{self.robot_state['location']}'.")
                 return True
@@ -140,12 +141,17 @@ class OnboardCore:
         return False
 
 def main():
+    """Główna pętla programu, która inicjuje i koordynuje pracę modułów."""
     print("--- Start Symulacji Nexus Protocol MVP v1.0 ---")
-    display_world_state()
+    
+    # Przekazujemy słownik WORLD_STATE do OnboardCore
+    world_instance = WORLD_STATE
     
     cortex = CloudCortex()
-    core = OnboardCore()
+    core = OnboardCore(world_instance)
     monitor = AwarenessMonitor()
+
+    display_world_state()
 
     user_goal = "Jeśli w magazynie jest czerwony sześcian, przenieś go do strefy B. W przeciwnym razie, przynieś niebieską piłkę do strefy A."
 
@@ -154,6 +160,7 @@ def main():
 
     print("\n--- Końcowy Stan Świata ---")
     display_world_state()
+
 
 if __name__ == "__main__":
     main()
