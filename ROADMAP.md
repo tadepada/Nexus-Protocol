@@ -31,3 +31,10 @@ This document outlines our strategic goals, from the immediate MVP launch to our
     * [ ] Develop a framework for deconstructing abstract ideas into reusable components.
     * [ ] Implement the `Autonomous Code Generator (AGK)` to forge new micro-generators.
     * [ ] Demonstrate the system's ability to solve a problem using a capability that it created for itself.
+## Phase 2: The Generative Engine (The path to v5.0)
+
+* **Goal:** Begin implementing the core components of the "Composable Logic" and "Autocreation" architecture.
+* **Key Results:**
+    * [ ] Design the first version of the `Hierarchical Library (HBMG)` structure.
+    * [ ] Implement a basic `Dynamic Orchestration Engine (DSO)` capable of combining at least two micro-generators to solve a simple task.
+    * [ ] Refactor the MVP to use this new modular logic.
