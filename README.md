@@ -20,16 +20,16 @@ The biggest challenge in robotics isn't hardware, but a general-purpose AI "brai
 
 We recognize that a single LLM is the wrong tool for real-time motor control. Our architecture is a **hybrid, distributed model**:
 
-1.  **The Cloud Cortex (Nexus Protocol):** A powerful, LLM-based model runs in the cloud. It handles complex reasoning, planning, and language. It decides **what** to do (e.g., "get the water bottle from the table").
+1.  **The Cloud Cortex (Nexus Protocol):** A powerful, LLM-based model runs in the cloud. It handles complex reasoning, planning, and language. It decides **what** to do.
 
-2.  **The Onboard Core:** A small, efficient, real-time processor runs on the robot itself. It handles reflexes, balance, and execution. It decides **how** to perform the action (e.g., calculating the precise joint movements).
+2.  **The Onboard Core:** A small, efficient, real-time processor runs on the robot itself. It handles reflexes, balance, and execution. It decides **how** to perform the action.
 
 Our project focuses on perfecting the Cloud Cortex and the communication protocol between these two "brains." For a more technical deep-dive, see our [Architecture Document](ARCHITECTURE.md).
 
 ### How to Get Involved
 
 This project is in its foundational stage. The best way to contribute right now is to:
-* Review our documentation, especially the `PROJECT_SUMMARY.md` and `ARCHITECTURE.md`.
+* Review our documentation.
 * Run the MVP simulation using the `QUICKSTART.md` guide.
 * Join the "Discussions" on GitHub to share your ideas on how to improve the MVP.
 
