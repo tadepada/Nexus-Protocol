@@ -14,15 +14,15 @@ To run the simulation yourself, check out the [Quick Start Guide](QUICKSTART.md)
 
 ### The Vision
 
-The biggest challenge in robotics isn't hardware, but a general-purpose AI "brain." Our mission is to create the foundational open-source standard for this "brain," empowering developers to build truly intelligent systems.
+The biggest challenge in robotics isn't hardware, but a general-purpose AI "brain." Our mission is to create the foundational open-source standard for this "brain," empowering developers to build truly intelligent systems. Our long-term vision is an AI that doesn't just execute tasks, but learns, adapts, and creates new capabilities on its own.
 
 ### The Architecture: A Distributed Mind
 
-We recognize that a single LLM is the wrong tool for real-time motor control. Our architecture is a **hybrid, distributed model**:
+We recognize that a single LLM is the wrong tool for real-time motor control. Our architecture is a **hybrid, distributed model**.
 
-1.  **The Cloud Cortex (Nexus Protocol):** A powerful, LLM-based model runs in the cloud. It handles complex reasoning, planning, and language. It decides **what** to do.
+1.  **The Cloud Cortex (Nexus Protocol):** A powerful, AI-driven system that runs in the cloud. It handles complex reasoning, planning, and language. It decides **what** to do.
 
-2.  **The Onboard Core:** A small, efficient, real-time processor runs on the robot itself. It handles reflexes, balance, and execution. It decides **how** to perform the action.
+2.  **The Onboard Core:** A small, efficient, real-time processor that runs on the robot itself. It handles reflexes, balance, and execution. It decides **how** to perform the action.
 
 Our project focuses on perfecting the Cloud Cortex and the communication protocol between these two "brains." For a more technical deep-dive, see our [Architecture Document](ARCHITECTURE.md).
 
