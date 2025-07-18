@@ -1,39 +1,12 @@
-## Podsumowanie Projektu
+Project Summary: Nexus Protocol
+The Problem We Are Solving:
+Modern robots and AI agents are brittle. They execute commands but lack a full understanding of the context of their actions. They often break down when faced with unexpected problems, unable to autonomously recover from their mistakes. They lack true operational awareness and the ability to flexibly adapt.
 
-Dostarczony kod to symulacja zaawansowanego, autonomicznego agenta (robota), który działa w prostym, zdefiniowanym świecie. Architektura jest podzielona na trzy kluczowe, niezależne moduły, które współpracują, aby osiągnąć złożony, warunkowy cel. Celem projektu jest zademonstrowanie zdolności do planowania, wykonywania zadań oraz, co najważniejsze, monitorowania własnych działań w poszukiwaniu błędów.
+Our Solution (The MVP):
+Nexus Protocol is an attempt to solve this problem from the ground up. We are starting by creating an open-source architecture for an agent that is capable of monitoring its own actions and detecting when it makes a mistake. Our first product (MVP) is a simple Python simulation that demonstrates this fundamental "awareness loop" (Plan -> Act -> Verify) in practice.
 
-## Analiza Komponentów
+Our Architecture:
+Our model is based on the concept of a "Distributed Mind". A powerful, strategic, and creative "brain" (Cloud Cortex) runs on remote servers, while a fast, reactive "spinal cord" (Onboard Core) resides on the physical robot, responsible for reflexes and real-time safety. Nexus Protocol is the operating system for this "cloud brain".
 
-System składa się z trzech głównych klas oraz globalnego stanu świata:
-
-### 1. CloudCortex (Kora w Chmurze)
-* **Rola:** "Mózg" lub "Strateg" operacji.
-* **Funkcjonalność:** Ta klasa symuluje potężny model AI (LLM) działający w chmurze. Jej zadaniem jest przyjęcie celu sformułowanego w języku naturalnym (np. "Jeśli w magazynie jest X, zrób Y") i przetłumaczenie go na konkretny, sekwencyjny plan działania dla robota.
-* **Kluczowe Metody:** `generate_plan(high_level_goal)` i `create_sub_plan(...)`.
-
-### 2. OnboardCore (Rdzeń Pokładowy)
-* **Rola:** "Ciało" lub "Wykonawca" operacji.
-* **Funkcjonalność:** Ta klasa reprezentuje lokalne oprogramowanie robota. Jest odpowiedzialna za fizyczne wykonanie planu, krok po kroku. Nie "myśli" strategicznie, tylko precyzyjnie wykonuje otrzymane polecenia.
-* **Kluczowe Metody:** `execute_plan(plan, monitor)` i `perform_action(action, target)`.
-
-### 3. AwarenessMonitor (Monitor Świadomości Błędów - KMŚS)
-* **Rola:** "Samoświadomość" lub "Kontrola Jakości" systemu.
-* **Funkcjonalność:** To najważniejszy i najbardziej innowacyjny element tego projektu. Jego zadaniem nie jest działanie, lecz obserwacja i analiza. Porównuje on stan świata przed wykonaniem akcji ze stanem po jej wykonaniu, aby sprawdzić, czy rezultat jest zgodny z oczekiwaniami.
-* **Kluczowa Metoda:** `check_outcome(...)`.
-
-## Przepływ Działania (Funkcja main)
-1.  **Inicjalizacja:** Tworzone są instancje wszystkich trzech modułów.
-2.  **Definicja Celu:** Użytkownik definiuje złożony, warunkowy cel.
-3.  **Planowanie:** Cel trafia do `CloudCortex`, który generuje sekwencyjny plan.
-4.  **Wykonanie i Monitorowanie:** Plan jest przekazywany do `OnboardCore`. Po każdej akcji `AwarenessMonitor` weryfikuje jej poprawność.
-5.  **Zakończenie:** Wyświetlany jest końcowy stan świata.
-
-## Kluczowe Koncepcje
-* **Modularność:** Rozdzielenie logiki na planowanie, wykonanie i monitorowanie to solidna i skalowalna architektura.
-* **Planowanie Warunkowe:** System potrafi podejmować decyzje na podstawie aktualnego stanu środowiska.
-* **Świadomość Błędów:** `AwarenessMonitor` jest symulacją metapoznania – zdolności systemu do "myślenia o własnym działaniu".
-
-## Potencjalne Dalsze Kroki
-* **Pętla Zwrotna:** Co się stanie, gdy `AwarenessMonitor` wykryje anomalię? Mógłby wysyłać sygnał zwrotny do `CloudCortex` z prośbą o wygenerowanie planu naprawczego.
-* **Bardziej Złożone Rozumienie Języka:** Integracja z prawdziwym modelem językowym, aby rozumieć szerszy zakres poleceń.
-* **Dynamiczny Świat:** `WORLD_STATE` mógłby zmieniać się niezależnie od działań robota, zmuszając go do ciągłej adaptacji i replanowania.
+Our Ultimate Vision:
+Our ultimate vision is to create a global, open platform for true artificial general intelligence (AGI). We aim to build a system that doesn't just execute tasks, but learns, adapts, and even autonomously creates new capabilities, evolving through the contributions and collective intelligence of a global community.
