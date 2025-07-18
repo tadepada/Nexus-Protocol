@@ -1,36 +1,39 @@
 # Nexus Protocol
 
-**An open-source initiative to build the definitive AI Operating System for intelligent robotics and virtual beings.**
+**An open-source architecture for building resilient, self-monitoring autonomous agents.**
 
 ---
 
-### Our Current Goal: A Working Proof of Concept
+### The Problem
 
-Our immediate priority is to deliver a **Minimal Viable Product (MVP)** in the form of a simulation. We believe in "show, don't tell." This MVP demonstrates the core principle of our architecture: a high-level "Cloud Cortex" (LLM) providing strategic goals to a low-level, real-time "Onboard Core."
+Standard autonomous agents often operate in a simple "plan-and-execute" loop. They are brittle and tend to fail silently. When an action doesn't produce the expected result (e.g., a gripper slips), the system often continues with its plan, leading to compounded errors, or it simply freezes, unable to recover.
 
-For a detailed breakdown of the project's philosophy and components, see our [Project Summary](PROJECT_SUMMARY.md).
+### Our Solution: The Awareness Loop
 
-To run the simulation yourself, check out the [Quick Start Guide](QUICKSTART.md)!
+Nexus Protocol introduces a simple but powerful architectural pattern: **The Awareness Loop**. Instead of just planning and executing, our agents operate in a **Plan -> Execute -> Verify** cycle.
 
-### The Vision
+The core of our MVP is a simulation of three key components:
+1.  **A `CloudCortex` (Planner):** A high-level module that creates a strategic plan to achieve a goal.
+2.  **An `OnboardCore` (Executor):** A low-level module that executes each step of the plan in the environment.
+3.  **An `AwarenessMonitor` (Verifier):** A crucial third component that observes the outcome of each action and compares it to the expected outcome defined by the plan.
 
-The biggest challenge in robotics isn't hardware, but a general-purpose AI "brain." Our mission is to create the foundational open-source standard for this "brain," empowering developers to build truly intelligent systems. Our long-term vision is an AI that doesn't just execute tasks, but learns, adapts, and creates new capabilities on its own.
+This constant verification loop gives the agent a primitive form of "operational awareness." It is the fundamental building block for creating systems that can detect their own errors.
 
-### The Architecture: A Distributed Mind
+### The MVP
 
-We recognize that a single LLM is the wrong tool for real-time motor control. Our architecture is a **hybrid, distributed model**:
+This repository contains a working **Minimal Viable Product (MVP)** (`main.py`), a Python script that simulates this entire process. You can run it and see the `AwarenessMonitor` successfully detect both successful actions and simulated physical failures.
 
-1.  **The Cloud Cortex (Nexus Protocol):** A powerful, AI-driven system that runs in the cloud. It handles complex reasoning, planning, and language. It decides **what** to do.
+See our **[Quick Start Guide](QUICKSTART.md)** to run the simulation in under a minute.
 
-2.  **The Onboard Core:** A small, efficient, real-time processor that runs on the robot itself. It handles reflexes, balance, and execution. It decides **how** to perform the action.
+### The Roadmap
 
-Our project focuses on perfecting the Cloud Cortex and the communication protocol between these two "brains." For a more technical deep-dive, see our [Architecture Document](ARCHITECTURE.md).
+Our vision is to build upon this foundation. The next logical steps are:
+* **Implement Autonomous Recovery:** Create protocols that allow the agent to generate new plans in response to anomalies detected by the `AwarenessMonitor`.
+* **Integrate a Real LLM:** Replace the current simulated planner with a true Large Language Model (like the Gemini API) to handle more complex, natural language goals.
+* **Bridge to Robotics:** Integrate the architecture with ROS 2 to control a simulated or physical robot.
+
+Check our full **[Roadmap](ROADMAP.md)** for more details.
 
 ### How to Get Involved
 
-This project is in its foundational stage. The best way to contribute right now is to:
-* Review our documentation.
-* Run the MVP simulation using the `QUICKSTART.md` guide.
-* Join the "Discussions" on GitHub to share your ideas on how to improve the MVP.
-
-We are looking for thinkers and developers to help us build the next version of our simulation.
+This is a foundational project focused on solving a core problem in reliable AI. We are looking for collaborators to help us improve this MVP and design our autonomous recovery protocols. Please join the **Discussions** on GitHub.
