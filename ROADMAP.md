@@ -24,17 +24,10 @@ This document outlines our strategic goals, from the immediate MVP launch to our
 
 * **Goal:** Create the first successful integration with a physical or simulated robotics platform (e.g., via ROS 2).
 
-## Phase 4: Evolutionary Intelligence
+## Phase 4: The Ultimate Goal - Evolutionary Intelligence
 
 * **Goal:** Implement the **Autocreation Loop**, creating a system that can autonomously generate new capabilities based on its own creative synthesis.
 * **Key Results:**
     * [ ] Develop a framework for deconstructing abstract ideas into reusable components.
     * [ ] Implement the `Autonomous Code Generator (AGK)` to forge new micro-generators.
     * [ ] Demonstrate the system's ability to solve a problem using a capability that it created for itself.
-## Phase 5: The Generative Engine (The path to v5.0)
-
-* **Goal:** Begin implementing the core components of the "Composable Logic" and "Autocreation" architecture.
-* **Key Results:**
-    * [ ] Design the first version of the `Hierarchical Library (HBMG)` structure.
-    * [ ] Implement a basic `Dynamic Orchestration Engine (DSO)` capable of combining at least two micro-generators to solve a simple task.
-    * [ ] Refactor the MVP to use this new modular logic.
