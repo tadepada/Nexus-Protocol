@@ -18,7 +18,7 @@ The biggest challenge in robotics isn't hardware, but a general-purpose AI "brai
 
 ### The Architecture: A Distributed Mind
 
-We recognize that a single LLM is the wrong tool for real-time motor control. Our architecture is a **hybrid, distributed model**.
+We recognize that a single LLM is the wrong tool for real-time motor control. Our architecture is a **hybrid, distributed model**:
 
 1.  **The Cloud Cortex (Nexus Protocol):** A powerful, AI-driven system that runs in the cloud. It handles complex reasoning, planning, and language. It decides **what** to do.
 
