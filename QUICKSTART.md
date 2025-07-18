@@ -1,4 +1,4 @@
-# Nexus Protocol - Quick Start Guide
+ Nexus Protocol - Quick Start Guide
 
 This guide will help you run the MVP simulation of the Nexus Protocol on your local machine in just a few minutes.
 
@@ -27,3 +27,4 @@ Bash
 python main.py
 4. Expected Output
 If everything is set up correctly, you should see a simulation running in your terminal, showing how the Cloud Cortex generates a plan and the Onboard Core executes it by moving objects between locations.
+
