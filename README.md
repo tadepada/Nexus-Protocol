@@ -1,39 +1,26 @@
-# Nexus Protocol
-
-**An open-source architecture for building resilient, self-monitoring autonomous agents.**
+> **Project Update (July 18, 2025):** The project has undergone a significant strategic pivot based on early feedback. We have just finalized our first functional MVP (a Python simulation) and have updated all documentation to reflect a new, more focused, and ambitious long-term vision. We are officially ready for community engagement!
 
 ---
 
+# Nexus Protocol
+
+**An open-source architecture for building resilient, self-monitoring, and continuously evolving autonomous agents.**
+
 ### The Problem
 
-Standard autonomous agents often operate in a simple "plan-and-execute" loop. They are brittle and tend to fail silently. When an action doesn't produce the expected result (e.g., a gripper slips), the system often continues with its plan, leading to compounded errors, or it simply freezes, unable to recover.
+Standard autonomous agents are static. They operate on a fixed set of rules and fail when encountering novel situations. They don't learn from their mistakes in a meaningful way, and their core logic doesn't improve over time.
 
-### Our Solution: The Awareness Loop
+### Our Solution: An Evolutionary Architecture
 
-Nexus Protocol introduces a simple but powerful architectural pattern: **The Awareness Loop**. Instead of just planning and executing, our agents operate in a **Plan -> Execute -> Verify** cycle.
+Nexus Protocol is a blueprint for an AI that learns, adapts, and evolves. Our core principle is that a true general intelligence cannot be programmed; it must emerge from a continuous cycle of interaction, self-reflection, and self-improvement.
 
-The core of our MVP is a simulation of three key components:
-1.  **A `CloudCortex` (Planner):** A high-level module that creates a strategic plan to achieve a goal.
-2.  **An `OnboardCore` (Executor):** A low-level module that executes each step of the plan in the environment.
-3.  **An `AwarenessMonitor` (Verifier):** A crucial third component that observes the outcome of each action and compares it to the expected outcome defined by the plan.
+Our first **Minimal Viable Product (MVP)** is a simple Python simulation demonstrating the foundational concept: an agent that can monitor its own actions and detect its own failures. This "Awareness Loop" is the first step on the road to a self-evolving system.
 
-This constant verification loop gives the agent a primitive form of "operational awareness." It is the fundamental building block for creating systems that can detect their own errors.
+### Getting Started
 
-### The MVP
+* **Run the MVP:** See our core idea in action in under 60 seconds. Go to our **[Quick Start Guide](QUICKSTART.md)**.
+* **Read the Vision:** Understand our ambitious, long-term goal. Read our **[Project Summary](PROJECT_SUMMARY.md)**.
+* **Explore the Architecture:** Dive deep into the full technical and philosophical vision. See our **[Architecture Document](ARCHITECTURE.md)**.
+* **Get Involved:** Have an idea? Join the **[Discussions](https://github.com/tadepada/Nexus-Protocol/discussions)** tab.
 
-This repository contains a working **Minimal Viable Product (MVP)** (`main.py`), a Python script that simulates this entire process. You can run it and see the `AwarenessMonitor` successfully detect both successful actions and simulated physical failures.
-
-See our **[Quick Start Guide](QUICKSTART.md)** to run the simulation in under a minute.
-
-### The Roadmap
-
-Our vision is to build upon this foundation. The next logical steps are:
-* **Implement Autonomous Recovery:** Create protocols that allow the agent to generate new plans in response to anomalies detected by the `AwarenessMonitor`.
-* **Integrate a Real LLM:** Replace the current simulated planner with a true Large Language Model (like the Gemini API) to handle more complex, natural language goals.
-* **Bridge to Robotics:** Integrate the architecture with ROS 2 to control a simulated or physical robot.
-
-Check our full **[Roadmap](ROADMAP.md)** for more details.
-
-### How to Get Involved
-
-This is a foundational project focused on solving a core problem in reliable AI. We are looking for collaborators to help us improve this MVP and design our autonomous recovery protocols. Please join the **Discussions** on GitHub.
+We are at day zero of an ambitious journey. We are looking for thinkers, developers, and visionaries to help us build the next generation of AI.
