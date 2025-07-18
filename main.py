@@ -1,12 +1,14 @@
 # main.py
-# Wersja 1.0 - Kompletny, przetestowany kod dla Minimal Viable Product projektu Nexus Protocol.
-# Zawiera logikę planowania warunkowego oraz monitor świadomości błędów.
+# Version 1.1 - MVP refactored for clarity and professionalism. All comments and prints are in English.
+# Added a placeholder for a real LLM API call in CloudCortex.
 
 import json
 import time
 import random
 
-# STAN ŚWIATA
+# --- WORLD STATE ---
+# Defines the virtual world in which the robot operates.
+# This is our "single source of truth" for the location of objects.
 WORLD_STATE = {
     "locations": {
         "storage_area": ["red_cube", "blue_ball"],
@@ -17,20 +19,23 @@ WORLD_STATE = {
 }
 
 def display_world_state():
-    """Funkcja pomocnicza do ładnego wyświetlania stanu świata."""
-    print("\n--- Aktualny Stan Świata ---")
+    """Helper function to print the current state of the world nicely."""
+    print("\n--- Current World State ---")
     for location, items in WORLD_STATE['locations'].items():
-        print(f"{location}: {items if items else '[pusto]'}")
+        print(f"{location}: {items if items else '[empty]'}")
     print("---------------------------\n")
 
 class AwarenessMonitor:
-    """Moduł sprawdzający, czy wynik akcji zgadza się z oczekiwaniami."""
+    """
+    This module checks if the outcome of an action matches expectations.
+    It's the core of the system's "operational awareness".
+    """
     def __init__(self):
         self.log = []
-        print("Awareness Monitor [KMŚS]: Inicjalizacja. Monitoruję rzeczywistość.")
+        print("Awareness Monitor [KMSS]: Initialized. Monitoring reality.")
 
     def check_outcome(self, action, target, state_before, state_after):
-        log_entry = f"[ANALIZA] Akcja: {action}, Cel: {target}. "
+        log_entry = f"[ANALYSIS] Action: {action}, Target: {target}. "
         expected_to_succeed = True
 
         if action == "PICKUP":
@@ -45,63 +50,66 @@ class AwarenessMonitor:
                 expected_to_succeed = False
         
         if expected_to_succeed:
-            log_entry += "Wynik zgodny z oczekiwaniami."
+            log_entry += "Outcome as expected."
         else:
-            log_entry += "ANOMALIA! Wynik niezgodny z oczekiwaniami!"
+            log_entry += "ANOMALY! Outcome does not match expectation!"
         
         print(log_entry)
         self.log.append(log_entry)
 
 class CloudCortex:
-    """Kora w Chmurze zdolna do planowania warunkowego."""
+    """
+    The strategic brain of the operation. In a real system, this would make a call
+    to a powerful LLM (like Gemini API) to generate a plan.
+    """
     def __init__(self):
-        print("Cloud Cortex [LLM]: Inicjalizacja.")
-        self.entity_map = { "czerwony": "red", "niebieski": "blue", "zielony": "green", "sześcian": "cube", "piłka": "ball", "piramida": "pyramid", "strefy a": "zone_A", "strefy b": "zone_B", "bazy": "robot_home", "magazynu": "storage_area" }
-
-    def create_sub_plan(self, object_id, destination_id):
-        """Tworzy pod-plan dla prostej akcji 'przynieś'."""
-        source_location = next((loc for loc, items in WORLD_STATE['locations'].items() if object_id in items), None)
-        if not source_location:
-            print(f"Cloud Cortex [LLM]: Błąd pod-planu - obiekt '{object_id}' nie istnieje.")
-            return None
-        return [
-            {"action": "GOTO", "target": source_location},
-            {"action": "PICKUP", "target": object_id},
-            {"action": "GOTO", "target": destination_id},
-            {"action": "DROP", "target": object_id}
-        ]
+        print("Cloud Cortex [LLM]: Initialized. Ready for strategic planning.")
 
     def generate_plan(self, high_level_goal: str) -> list:
-        print(f"\nCloud Cortex [LLM]: Otrzymano cel: '{high_level_goal}'. Analiza...")
+        """
+        Takes a natural language goal and returns a structured plan.
+        *** THIS IS THE FUNCTION TO BE REPLACED WITH A REAL LLM API CALL ***
+        """
+        print(f"\nCloud Cortex [LLM]: Received goal: '{high_level_goal}'. Generating plan...")
         time.sleep(1.5)
-        goal_lower = high_level_goal.lower()
 
-        if goal_lower.startswith("jeśli"):
-             condition_obj_id = "red_cube"; condition_loc = "storage_area"
-             print(f"Cloud Cortex [LLM]: Sprawdzam warunek: Czy '{condition_obj_id}' jest w '{condition_loc}'?")
-             if condition_obj_id in WORLD_STATE['locations'].get(condition_loc, []):
-                 print("Cloud Cortex [LLM]: Warunek PRAWDZIWY. Wykonuję pierwszą ścieżkę.")
-                 return self.create_sub_plan("red_cube", "zone_B")
-             else:
-                 print("Cloud Cortex [LLM]: Warunek FAŁSZYWY. Wykonuję ścieżkę 'w przeciwnym razie'.")
-                 return self.create_sub_plan("blue_ball", "zone_A")
+        # For MVP purposes, we simulate the LLM's output with simple logic.
+        # A real implementation would send the goal and world state to an LLM
+        # and parse the JSON response.
+        if "red cube" in high_level_goal and "storage" in high_level_goal and "zone B" in high_level_goal:
+            source_location = "storage_area"
+            destination = "zone_B"
+            obj = "red_cube"
+            
+            print(f"Cloud Cortex [LLM]: Plan generated successfully.")
+            return [
+                {"action": "GOTO", "target": source_location},
+                {"action": "PICKUP", "target": obj},
+                {"action": "GOTO", "target": destination},
+                {"action": "DROP", "target": obj}
+            ]
         else:
-            print("Cloud Cortex [LLM]: Nie rozpoznano polecenia warunkowego. Zwracam pusty plan.")
+            print(f"Cloud Cortex [LLM]: Could not generate a plan for this goal.")
             return []
 
 class OnboardCore:
+    """
+    The "body" or "executor" of the operation. It executes the plan step-by-step.
+    """
     def __init__(self, world_state_ref):
         self.world_state_ref = world_state_ref
         self.robot_state = {"holding": None, "location": "robot_home"}
-        print("OnboardCore: Inicjalizacja. Gotowy do działania.")
+        print("OnboardCore [Robot]: Initialized. Ready for action.")
 
     def execute_plan(self, plan: list, monitor: AwarenessMonitor):
-        print("\nOnboard Core [Robot]: Otrzymano plan. Rozpoczynam wykonanie.")
-        if not plan: return
+        print("\nOnboard Core [Robot]: Plan received. Starting execution.")
+        if not plan: 
+            print("Onboard Core [Robot]: Plan is empty. No actions to perform.")
+            return
 
         for step in plan:
             action, target = step.get("action"), step.get("target")
-            print(f"--- Wykonuję krok: {action}, Cel: {target or 'N/A'} ---")
+            print(f"--- Executing step: {action}, Target: {target or 'N/A'} ---")
             
             state_before = {'robot': self.robot_state.copy(), 'world': json.loads(json.dumps(self.world_state_ref))}
             time.sleep(1)
@@ -111,30 +119,40 @@ class OnboardCore:
             monitor.check_outcome(action, target, state_before, state_after)
 
             if not success:
-                print("Onboard Core [Robot]: Wykonanie kroku nie powiodło się. Przerywam plan."); break
-        print("\nOnboard Core [Robot]: Zakończono wykonywanie planu.")
+                print("Onboard Core [Robot]: Step execution failed. Aborting plan.")
+                break
+        print("\nOnboard Core [Robot]: Plan execution finished.")
 
     def perform_action(self, action, target):
+        """Simulates the physical execution of a single action."""
         world_locations = self.world_state_ref['locations']
         if action == "GOTO":
-            self.robot_state["location"] = target; return True
+            self.robot_state["location"] = target
+            print(f"Onboard Core [Robot]: Moved to '{target}'.")
+            return True
         if action == "PICKUP":
+            # Simulating a physical failure
             if random.random() < 0.33:
-                print(f"Onboard Core [Robot]: KRYTYCZNY BŁĄD! Chwytak ześlizgnął się z obiektu '{target}'."); return True
+                print(f"Onboard Core [Robot]: CRITICAL ERROR! Gripper slipped while trying to pick up '{target}'.")
+                return True # The action was attempted, but the outcome was a failure
             if target in world_locations[self.robot_state['location']] and self.robot_state['holding'] is None:
-                world_locations[self.robot_state['location']].remove(target); self.robot_state['holding'] = target
-                print(f"Onboard Core [Robot]: Obiekt '{target}' podniesiony."); return True
+                world_locations[self.robot_state['location']].remove(target)
+                self.robot_state['holding'] = target
+                print(f"Onboard Core [Robot]: Picked up '{target}'.")
+                return True
             return False
         if action == "DROP":
             if self.robot_state['holding'] is not None and self.robot_state['holding'] == target:
-                world_locations[self.robot_state['location']].append(self.robot_state['holding']); self.robot_state['holding'] = None
-                print(f"Onboard Core [Robot]: Obiekt '{target}' upuszczony w '{self.robot_state['location']}'."); return True
+                world_locations[self.robot_state['location']].append(self.robot_state['holding'])
+                self.robot_state['holding'] = None
+                print(f"Onboard Core [Robot]: Dropped '{target}' in '{self.robot_state['location']}'.")
+                return True
             return False
         return False
 
 def main():
-    """Główna pętla programu, która inicjuje i koordynuje pracę modułów."""
-    print("--- Start Symulacji Nexus Protocol MVP v1.0 ---")
+    """Main function to run the simulation."""
+    print("--- Starting Nexus Protocol MVP v1.1 Simulation ---")
     
     world_instance = WORLD_STATE
     cortex = CloudCortex()
@@ -143,14 +161,12 @@ def main():
 
     display_world_state()
 
-    user_goal = "Jeśli w magazynie jest czerwony sześcian, przenieś go do strefy B. W przeciwnym razie, przynieś niebieską piłkę do strefy A."
-
+    user_goal = "Bring the red cube from the storage area to zone B"
     strategic_plan = cortex.generate_plan(user_goal)
     core.execute_plan(strategic_plan, monitor)
 
-    print("\n--- Końcowy Stan Świata ---")
+    print("\n--- Final World State ---")
     display_world_state()
-
 
 if __name__ == "__main__":
     main()
