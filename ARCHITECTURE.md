@@ -36,4 +36,4 @@ This is what makes the system truly intelligent and self-improving.
 
 ---
 
-To jest ostateczny pakiet. Daj znać, gdy repozytorium będzie w pełni zaktualizowane.
+
