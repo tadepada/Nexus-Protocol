@@ -1,4 +1,4 @@
-> **Project Update (July 18, 2025):** The project has undergone a significant strategic pivot based on early feedback. We have just finalized our first functional MVP (a Python simulation) and have updated all documentation to reflect a new, more focused, and ambitious long-term vision. We are officially ready for community engagement!
+> **Project Update (July 19, 2025):** The project is officially launching. We have just finalized our first functional MVP (a Python simulation) and have updated all documentation to reflect our new, more focused, and ambitious long-term vision. We are now ready for community engagement!
 
 ---
 
