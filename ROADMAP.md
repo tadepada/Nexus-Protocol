@@ -9,7 +9,6 @@ This document outlines the evolutionary path for Nexus Protocol. Each phase is a
     * [x] **MVP v1.0 code is complete and tested.**
     * [ ] **Update the GitHub repository with all final files.**
     * [ ] **Launch publicly on Hacker News, Reddit, etc.**
-    * [ ] Attract the first 10 active community members.
 
 ## Phase 2: The Orchestrator - Towards v2.0
 
